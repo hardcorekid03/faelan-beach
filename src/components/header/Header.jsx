@@ -1,6 +1,7 @@
 import "./Header.css";
 import { Link, useLocation } from "react-router-dom";
 import React, { useEffect } from "react";
+import logo from "./images/logo.svg"
 function Header() {
   const location = useLocation();
 
@@ -36,7 +37,7 @@ function Header() {
         <div className="container-fluid">
           <Link to="/" className="navbar-brand">
             <img
-              src="/src/images/logo3.svg"
+              src={logo}
               alt=""
               width="150"
               height="40"
