@@ -1,11 +1,37 @@
 import React from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { sendCustomEmail } from "./email";
+
 import "./Contact.css";
 
 function Contact() {
+  const [details, setDetails] = useState({
+    fullname: "",
+    subject: "",
+    message: "",
+    phone: "",
+    email: "",
+  });
+
+  const handleDetailsChange = (event) => {
+    const { name, value } = event.target;
+
+    setDetails((prevDetails) => {
+      return {
+        ...prevDetails,
+        [name]: value,
+      };
+    });
+  };
+
+  const handleSendEmail = () => {
+    sendCustomEmail(details);
+  };
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
   return (
     <>
       <main>
@@ -23,7 +49,7 @@ function Contact() {
                 <div className="col-12 col-lg-6">
                   <div className="row justify-content-xl-center">
                     <div className="col-12 col-xl-11">
-                      <div className="d-flex mb-5"> 
+                      <div className="d-flex mb-5">
                         <div className="me-4 text-primary">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -34,7 +60,7 @@ function Contact() {
                             viewBox="0 0 16 16"
                           >
                             <path
-                              fill-rule="evenodd"
+                              fillRule="evenodd"
                               d="M8 1a3 3 0 1 0 0 6 3 3 0 0 0 0-6zM4 4a4 4 0 1 1 4.5 3.969V13.5a.5.5 0 0 1-1 0V7.97A4 4 0 0 1 4 3.999zm2.493 8.574a.5.5 0 0 1-.411.575c-.712.118-1.28.295-1.655.493a1.319 1.319 0 0 0-.37.265.301.301 0 0 0-.057.09V14l.002.008a.147.147 0 0 0 .016.033.617.617 0 0 0 .145.15c.165.13.435.27.813.395.751.25 1.82.414 3.024.414s2.273-.163 3.024-.414c.378-.126.648-.265.813-.395a.619.619 0 0 0 .146-.15.148.148 0 0 0 .015-.033L12 14v-.004a.301.301 0 0 0-.057-.09 1.318 1.318 0 0 0-.37-.264c-.376-.198-.943-.375-1.655-.493a.5.5 0 1 1 .164-.986c.77.127 1.452.328 1.957.594C12.5 13 13 13.4 13 14c0 .426-.26.752-.544.977-.29.228-.68.413-1.116.558-.878.293-2.059.465-3.34.465-1.281 0-2.462-.172-3.34-.465-.436-.145-.826-.33-1.116-.558C3.26 14.752 3 14.426 3 14c0-.599.5-1 .961-1.243.505-.266 1.187-.467 1.957-.594a.5.5 0 0 1 .575.411z"
                             />
                           </svg>
@@ -64,7 +90,7 @@ function Contact() {
                         </div>
                         <div>
                           <h4 className="mb-3">Phone</h4>
-                          <p class="mb-0">
+                          <p className="mb-0">
                             <a
                               className="link-secondary text-decoration-none"
                               href="tel:+639156886605"
@@ -90,7 +116,7 @@ function Contact() {
                         </div>
                         <div>
                           <h4 className="mb-3">E-mail</h4>
-                          <p class="mb-0">
+                          <p className="mb-0">
                             <a className="link-secondary text-decoration-none">
                               faelanbeach@gmail.com
                             </a>
@@ -132,10 +158,10 @@ function Contact() {
                 </div>
                 <div className="col-12 col-lg-6">
                   <div className="bg-white border rounded shadow-sm overflow-hidden">
-                    <form action="#!">
+                    <form className="contact-form">
                       <div className="row gy-4 gy-xl-5 p-4 p-xl-5">
                         <div className="col-12">
-                          <label for="fullname" className="form-label">
+                          <label htmlFor="fullname" className="form-label">
                             Full Name <span className="text-danger">*</span>
                           </label>
                           <input
@@ -143,12 +169,14 @@ function Contact() {
                             className="form-control"
                             id="fullname"
                             name="fullname"
-                            value=""
+                            value={details.fullname}
+                            onChange={handleDetailsChange}
                             required
                           />
+
                         </div>
                         <div className="col-12 col-md-6">
-                          <label for="email" className="form-label">
+                          <label htmlFor="email" className="form-label">
                             Email <span className="text-danger">*</span>
                           </label>
                           <div className="input-group">
@@ -169,14 +197,15 @@ function Contact() {
                               className="form-control"
                               id="email"
                               name="email"
-                              value=""
+                              value={details.email}
+                              onChange={handleDetailsChange}
                               required
                             />
                           </div>
                         </div>
                         <div className="col-12 col-md-6">
-                          <label for="phone" className="form-label">
-                            Phone Number
+                          <label htmlFor="phone" className="form-label">
+                            Phone Number <span className="text-danger">*</span>
                           </label>
                           <div className="input-group">
                             <span className="input-group-text">
@@ -196,12 +225,14 @@ function Contact() {
                               className="form-control"
                               id="phone"
                               name="phone"
-                              value=""
+                              value={details.phone}
+                              onChange={handleDetailsChange}
+                              required
                             />
                           </div>
                         </div>
                         <div className="col-12">
-                          <label for="subject" className="form-label">
+                          <label htmlFor="subject" className="form-label">
                             Subject <span className="text-danger">*</span>
                           </label>
                           <input
@@ -209,12 +240,13 @@ function Contact() {
                             className="form-control"
                             id="subject"
                             name="subject"
-                            value=""
+                            value={details.subject}
+                            onChange={handleDetailsChange}
                             required
                           />
                         </div>
                         <div className="col-12">
-                          <label for="message" className="form-label">
+                          <label htmlFor="message" className="form-label">
                             Message <span className="text-danger">*</span>
                           </label>
                           <textarea
@@ -222,14 +254,23 @@ function Contact() {
                             id="message"
                             name="message"
                             rows="3"
+                            value={details.message}
+                            onChange={handleDetailsChange}
                             required
                           ></textarea>
                         </div>
                         <div className="col-12">
                           <div className="d-grid">
                             <button
+                              disabled={
+                                !details.fullname ||
+                                !details.phone ||
+                                !details.email ||
+                                !details.subject ||
+                                !details.message
+                              }
+                              onClick={handleSendEmail}
                               className="btn btn-primary btn-lg"
-                              type="submit"
                             >
                               Send Message
                             </button>

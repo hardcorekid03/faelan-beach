@@ -13,7 +13,6 @@ function Header() {
         navbarCollapse.classList.remove("show");
       }
     };
-
     // Add click event listener to each navbar link
     const navbarLinks = document.querySelectorAll(".navbar-nav .nav-link");
     navbarLinks.forEach((link) => {
